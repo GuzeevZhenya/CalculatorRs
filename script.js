@@ -9,31 +9,45 @@
 
 const button = document.querySelectorAll('button');
 // const output = document.querySelector('.output');
-const firstNumber = document.querySelector('.previous-operand');
-
+const screen = document.querySelector('.screen');
 const removeButton = document.querySelector('.delete');
-const operationButton = document.querySelector('.operation');
+const operationButton = document.querySelectorAll('.operation');
 const numberButton = document.querySelectorAll('.number');
 const dotButton = document.querySelector('.dot');
 const clearButton = document.querySelector('.clear');
+const equal = document.querySelector('.equal');
 
-
+let firstNumber;
+let secondNumber;
+let flag = false;
+let operation;
 
 //Вывод введенных чисел
-numberButton.forEach(function(item) {
+numberButton.forEach(function (item) {
     item.addEventListener('click', (e) => {
-        firstNumber.prepend(e.target.value);
+        if (flag) {
+            screen.innerHTML = e.target.value;
+            flag = false;
+        } else {
+            screen.append(e.target.value);
+        }
+
     })
 
 })
 
 removeButton.addEventListener('click', () => {
-
+    screen.innerHTML = remove(screen.innerHTML);
 })
 
-operationButton.addEventListener('click', () => {
-
+operationButton.forEach(item => {
+    item.addEventListener('click', (e) => {
+        operation =  e.target.innerHTML;
+        firstNumber = +screen.innerHTML;
+        flag = true;
+    })
 })
+
 
 dotButton.addEventListener('click', () => {
 
@@ -41,7 +55,28 @@ dotButton.addEventListener('click', () => {
 
 //Очистка поля
 clearButton.addEventListener('click', () => {
-    number.innerHTML = "";
+    screen.innerHTML = "";
+})
+
+equal.addEventListener('click', () => {
+    switch (operation) {
+        case '+': {
+           screen.innerHTML =  firstNumber + +screen.innerHTML;
+            break;
+        }
+
+        case '-': {
+            break;
+        }
+
+        case '/': {
+            break;
+        }
+
+        case '*': {
+            break;
+        }
+    }
 })
 
 
@@ -64,23 +99,7 @@ clearButton.addEventListener('click', () => {
 
 
 function remove(number) {
-    let newElement = number.split('').pop().join('');
+    let newElement = number.slice(0, -1);
     return newElement;
 }
-
-function operation(operation) {
-    switch (operation) {
-        case '+':
-            a + b;
-            break;
-        case '-':
-            a - b;
-            break;
-        case '/':
-            a + b;
-            break;
-        case '*':
-            a + b;
-            break;
-    }
-}
+ 
