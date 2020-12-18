@@ -65,7 +65,7 @@ dotButton.addEventListener('click', (e) => {
     if (e.target.innerHTML == "." && screen.innerHTML.includes('.'))
         return;
     //Добавляем 0. перед число, в случае если сразу нажали . 
-    screen.innerHTML = '0' + screen.innerHTML + e.target.innerHTML;
+    screen.innerHTML = screen.innerHTML + e.target.innerHTML;
 })
 
 //Очистка поля
