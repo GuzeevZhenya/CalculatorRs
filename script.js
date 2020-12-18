@@ -25,20 +25,20 @@ let operation;
 
 //Вывод введенных чисел
 numberButton.forEach(function(item) {
-    item.addEventListener('click', (e) => {
-        if (screen.innerHTML === '0') {
-            screen.innerHTML = e.target.value;
-        } else {
-            if (flag) {
+        item.addEventListener('click', (e) => {
+            if (screen.innerHTML === '0') {
                 screen.innerHTML = e.target.value;
-                flag = false;
             } else {
-                screen.append(e.target.value);
+                if (flag) {
+                    screen.innerHTML = e.target.value;
+                    flag = false;
+                } else {
+                    screen.append(e.target.value);
+                }
             }
-        }
+        })
     })
-})
-
+    //Конвертирует отрицательное в положительное, и положительное в отрицательное
 convertor.addEventListener('click', () => {
     if (screen.innerHTML > 0) {
         screen.innerHTML = -screen.innerHTML;
@@ -92,9 +92,6 @@ equal.addEventListener('click', () => {
 
 
 function remove(number) {
-    let newElement = number.slice(0, -1);
-    if (newElement.length == 0) {
-        return 0;
-    }
-    return newElement;
+    return number.slice(0, -1) || 0;
+
 }
