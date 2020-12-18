@@ -25,6 +25,7 @@ let operation;
 //Вывод введенных чисел
 numberButton.forEach(function(item) {
     item.addEventListener('click', (e) => {
+        if (e.target.innerHTML == "0" && screen.innerHTML.includes('0')) return;
         if (flag) {
             screen.innerHTML = e.target.value;
             flag = false;
@@ -49,7 +50,7 @@ operationButton.forEach(item => {
 
 dotButton.addEventListener('click', (e) => {
     if (e.target.innerHTML == "." && screen.innerHTML.includes('.')) return;
-    screen.innerHTML = screen.innerHTML.toString() + e.target.innerHTML.toString();
+    screen.innerHTML = screen.innerHTML + e.target.innerHTML.toString();
 })
 
 //Очистка поля
@@ -61,28 +62,18 @@ clearButton.addEventListener('click', () => {
 equal.addEventListener('click', () => {
     switch (operation) {
         case '+':
-            {
-                screen.innerHTML = firstNumber + +screen.innerHTML;
-                break;
-            }
-
+            screen.innerHTML = firstNumber + +screen.innerHTML;
+            break;
         case '-':
-            {
-                screen.innerHTML = firstNumber - +screen.innerHTML;
-                break;
-            }
-
+            screen.innerHTML = firstNumber - +screen.innerHTML;
+            break;
         case '/':
-            {
-                screen.innerHTML = firstNumber / +screen.innerHTML;
-                break;
-            }
-
+            screen.innerHTML = firstNumber / +screen.innerHTML;
+            break;
         case '*':
-            {
-                screen.innerHTML = firstNumber * +screen.innerHTML;
-                break;
-            }
+            screen.innerHTML = firstNumber * +screen.innerHTML;
+            break;
+
     }
 })
 
