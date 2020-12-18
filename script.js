@@ -16,6 +16,7 @@ const numberButton = document.querySelectorAll('.number');
 const dotButton = document.querySelector('.dot');
 const clearButton = document.querySelector('.clear');
 const equal = document.querySelector('.equal');
+const convertor = document.querySelector('.convertor');
 
 let firstNumber;
 let secondNumber;
@@ -25,14 +26,25 @@ let operation;
 //Вывод введенных чисел
 numberButton.forEach(function(item) {
     item.addEventListener('click', (e) => {
-        if (e.target.innerHTML == "0" && screen.innerHTML.includes('0')) return;
-        if (flag) {
+        if (screen.innerHTML === '0') {
             screen.innerHTML = e.target.value;
-            flag = false;
         } else {
-            screen.append(e.target.value);
+            if (flag) {
+                screen.innerHTML = e.target.value;
+                flag = false;
+            } else {
+                screen.append(e.target.value);
+            }
         }
     })
+})
+
+convertor.addEventListener('click', () => {
+    if (screen.innerHTML > 0) {
+        screen.innerHTML = -screen.innerHTML;
+    } else {
+        screen.innerHTML = -(screen.innerHTML);
+    }
 })
 
 removeButton.addEventListener('click', () => {
@@ -49,14 +61,16 @@ operationButton.forEach(item => {
 
 
 dotButton.addEventListener('click', (e) => {
-    if (e.target.innerHTML == "." && screen.innerHTML.includes('.')) return;
-    screen.innerHTML = screen.innerHTML + e.target.innerHTML.toString();
+    console.log(screen.innerHTML);
+    if (e.target.innerHTML == "." && screen.innerHTML.includes('.'))
+        return;
+    //Добавляем 0. перед число, в случае если сразу нажали . 
+    screen.innerHTML = '0' + screen.innerHTML + e.target.innerHTML;
 })
 
 //Очистка поля
 clearButton.addEventListener('click', () => {
     screen.innerHTML = "";
-
 })
 
 equal.addEventListener('click', () => {
@@ -73,7 +87,6 @@ equal.addEventListener('click', () => {
         case '*':
             screen.innerHTML = firstNumber * +screen.innerHTML;
             break;
-
     }
 })
 
