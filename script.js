@@ -22,15 +22,18 @@ let firstNumber;
 let secondNumber;
 let flag = false;
 let operation;
+let memoryOperation = 0;
 
 //Вывод введенных чисел
 numberButton.forEach(function(item) {
         item.addEventListener('click', (e) => {
             if (screen.innerHTML === '0') {
                 screen.innerHTML = e.target.value;
+                memoryOperation = e.target.value;
             } else {
                 if (flag) {
                     screen.innerHTML = e.target.value;
+                    memoryOperation = e.target.value;
                     flag = false;
                 } else {
                     screen.append(e.target.value);
@@ -74,9 +77,11 @@ clearButton.addEventListener('click', () => {
 })
 
 equal.addEventListener('click', () => {
+    flag = true;
     switch (operation) {
         case '+':
             screen.innerHTML = firstNumber + +screen.innerHTML;
+
             break;
         case '-':
             screen.innerHTML = firstNumber - +screen.innerHTML;
