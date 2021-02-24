@@ -81,7 +81,6 @@ equal.addEventListener('click', () => {
     switch (operation) {
         case '+':
             screen.innerHTML = firstNumber + +screen.innerHTML;
-
             break;
         case '-':
             screen.innerHTML = firstNumber - +screen.innerHTML;
