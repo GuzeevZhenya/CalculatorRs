@@ -43,11 +43,14 @@ numberButton.forEach(function(item) {
     })
     //Конвертирует отрицательное в положительное, и положительное в отрицательное
 convertor.addEventListener('click', () => {
-    if (screen.innerHTML > 0) {
-        screen.innerHTML = -screen.innerHTML;
+    if (screen.innerHTML[0] > 0) {
+        screen.innerHTML = +(screen.innerHTML * (-1));
+
     } else {
-        screen.innerHTML = -(screen.innerHTML);
+        screen.innerHTML = +(screen.innerHTML * (-1));
+
     }
+
 })
 
 removeButton.addEventListener('click', () => {
@@ -56,27 +59,35 @@ removeButton.addEventListener('click', () => {
 
 operationButton.forEach(item => {
     item.addEventListener('click', (e) => {
-        operation = e.target.innerHTML;
+        console.log(item);
+
         firstNumber = +screen.innerHTML;
+        operation = e.target.innerHTML;
         flag = true;
     })
 })
 
 
 dotButton.addEventListener('click', (e) => {
-    console.log(screen.innerHTML);
-    if (e.target.innerHTML == "." && screen.innerHTML.includes('.'))
+    if (e.target.innerHTML == "." && screen.innerHTML.includes('.')) {
         return;
+    }
     //Добавляем 0. перед число, в случае если сразу нажали . 
-    screen.innerHTML = screen.innerHTML + e.target.innerHTML;
+
+
+    if (flag) {
+        screen.innerHTML = 0 + e.target.innerHTML;
+        flag = false;
+    }
+
 })
 
 //Очистка поля
 clearButton.addEventListener('click', () => {
-    screen.innerHTML = "";
+    screen.innerHTML = "0";
 })
 
-equal.addEventListener('click', () => {
+equal.addEventListener('click', (e) => {
     flag = true;
     switch (operation) {
         case '+':
@@ -87,9 +98,12 @@ equal.addEventListener('click', () => {
             break;
         case '/':
             screen.innerHTML = firstNumber / +screen.innerHTML;
+            if (screen.innerHTML === 'Infinity') {
+                screen.innerHTML = 'На ноль делить нельзя';
+            }
             break;
         case '*':
-            screen.innerHTML = firstNumber * +screen.innerHTML;
+            screen.innerHTML = firstNumber * (+screen.innerHTML);
             break;
     }
 })
@@ -97,5 +111,4 @@ equal.addEventListener('click', () => {
 
 function remove(number) {
     return number.slice(0, -1) || 0;
-
 }
