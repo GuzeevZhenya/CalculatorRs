@@ -1,14 +1,4 @@
-// const numberButtons = document.querySelectorAll('[data-number]')
-// const operationButtons = document.querySelectorAll('[data-operation]')
-// const equalsButton = document.querySelector('[data-equals]')
-// const deleteButton = document.querySelector('[data-delete]')
-// const allClearButton = document.querySelector('[data-all-clear]')
-// const previousOperandTextElement = document.querySelector('[data-previous-operand]')
-// const currentOperandTextElement = document.querySelector('[data-current-operand]');
-
-
 const button = document.querySelectorAll('button');
-// const output = document.querySelector('.output');
 const screen = document.querySelector('.screen');
 const removeButton = document.querySelector('.delete');
 const operationButton = document.querySelectorAll('.operation');
@@ -18,39 +8,37 @@ const clearButton = document.querySelector('.clear');
 const equal = document.querySelector('.equal');
 const convertor = document.querySelector('.convertor');
 
+
+
 let firstNumber;
 let secondNumber;
-let flag = false;
+let isSecondNumber = false;
 let operation;
 let memoryOperation = 0;
+
 
 //Вывод введенных чисел
 numberButton.forEach(function(item) {
         item.addEventListener('click', (e) => {
-            if (screen.innerHTML === '0') {
-                screen.innerHTML = e.target.value;
-                memoryOperation = e.target.value;
-            } else {
-                if (flag) {
-                    screen.innerHTML = e.target.value;
-                    memoryOperation = e.target.value;
-                    flag = false;
+            let selectedNumber = e.target.value;
+            if (screen.innerHTML.length < 16) {
+                if (screen.innerHTML === '0') {
+                    screen.innerHTML = selectedNumber;
                 } else {
-                    screen.append(e.target.value);
+                    if (isSecondNumber) {
+                        screen.innerHTML = selectedNumber;
+                        isSecondNumber = false;
+                    } else {
+                        screen.append(selectedNumber);
+                    }
                 }
             }
         })
+
     })
     //Конвертирует отрицательное в положительное, и положительное в отрицательное
 convertor.addEventListener('click', () => {
-    if (screen.innerHTML[0] > 0) {
-        screen.innerHTML = +(screen.innerHTML * (-1));
-
-    } else {
-        screen.innerHTML = +(screen.innerHTML * (-1));
-
-    }
-
+    screen.innerHTML = -screen.innerHTML;
 })
 
 removeButton.addEventListener('click', () => {
@@ -59,54 +47,52 @@ removeButton.addEventListener('click', () => {
 
 operationButton.forEach(item => {
     item.addEventListener('click', (e) => {
-        console.log(item);
-
         firstNumber = +screen.innerHTML;
         operation = e.target.innerHTML;
-        flag = true;
+        isSecondNumber = true;
     })
 })
 
-
 dotButton.addEventListener('click', (e) => {
-    if (e.target.innerHTML == "." && screen.innerHTML.includes('.')) {
+    if (e.target.innerHTML == '.' && screen.innerHTML.includes('.')) {
         return;
     }
+
     //Добавляем 0. перед число, в случае если сразу нажали . 
-
-
-    if (flag) {
-        screen.innerHTML = 0 + e.target.innerHTML;
-        flag = false;
-    }
-
+    screen.innerHTML = screen.innerHTML + e.target.innerHTML;
+    isSecondNumber = false;
 })
 
 //Очистка поля
 clearButton.addEventListener('click', () => {
-    screen.innerHTML = "0";
+    screen.innerHTML = '0';
 })
 
 equal.addEventListener('click', (e) => {
-    flag = true;
+    let result;
+
     switch (operation) {
         case '+':
-            screen.innerHTML = firstNumber + +screen.innerHTML;
+            result = firstNumber + +screen.innerHTML;
+
             break;
         case '-':
-            screen.innerHTML = firstNumber - +screen.innerHTML;
+            result = firstNumber - +screen.innerHTML;
             break;
         case '/':
-            screen.innerHTML = firstNumber / +screen.innerHTML;
-            if (screen.innerHTML === 'Infinity') {
-                screen.innerHTML = 'На ноль делить нельзя';
+            result = firstNumber / (+screen.innerHTML);
+            if (result === 'Infinity') {
+                result = 'На ноль делить нельзя';
             }
             break;
         case '*':
-            screen.innerHTML = firstNumber * (+screen.innerHTML);
+            result = firstNumber * (+screen.innerHTML);
             break;
     }
+    screen.innerHTML = result;
 })
+
+
 
 
 function remove(number) {
