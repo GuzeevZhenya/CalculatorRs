@@ -16,25 +16,31 @@ let isSecondNumber = false;
 let operation;
 let memoryOperation = 0;
 let result;
+const MAX_SCREEN_LENGTH = 16;
 
 //Вывод введенных чисел
 numberButton.forEach(function(item) {
         item.addEventListener('click', (e) => {
             let selectedNumber = e.target.value;
-            if (screen.innerHTML.length < 16) {
+
+            if (screen.innerHTML.length < MAX_SCREEN_LENGTH) {
                 if (screen.innerHTML === '0') {
                     screen.innerHTML = selectedNumber;
+                    firstNumber = selectedNumber;
                 } else {
                     if (isSecondNumber) {
                         screen.innerHTML = selectedNumber;
+                        secondNumber = selectedNumber;
                         isSecondNumber = false;
+
                     } else {
                         screen.append(selectedNumber);
                     }
                 }
             }
+            console.log(secondNumber);
+            console.log(firstNumber);
         })
-
     })
     //Конвертирует отрицательное в положительное, и положительное в отрицательное
 convertor.addEventListener('click', () => {
@@ -66,32 +72,28 @@ dotButton.addEventListener('click', (e) => {
 //Очистка поля
 clearButton.addEventListener('click', () => {
     screen.innerHTML = '0';
-    result = 0;
 })
 
 equal.addEventListener('click', (e) => {
-    if (result) {
-        return;
-    }
+
     switch (operation) {
         case '+':
-            result = firstNumber + +screen.innerHTML;
+            result = firstNumber + +secondNumber;
             break;
         case '-':
-            result = firstNumber - +screen.innerHTML;
+            result = firstNumber - +secondNumber;
             break;
         case '/':
-            result = firstNumber / (+screen.innerHTML);
+            result = firstNumber / +secondNumber;
             if (result === 'Infinity') {
                 result = 'На ноль делить нельзя';
             }
             break;
         case '*':
-            result = firstNumber * (+screen.innerHTML);
+            result = firstNumber * +secondNumber;
             break;
     }
     screen.innerHTML = result;
-
 })
 
 function remove(number) {
