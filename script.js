@@ -70,30 +70,29 @@ clearButton.addEventListener('click', () => {
 
 equal.addEventListener('click', (e) => {
     let result;
-
     switch (operation) {
         case '+':
             result = firstNumber + +screen.innerHTML;
-
+            firstNumber = '';
             break;
         case '-':
             result = firstNumber - +screen.innerHTML;
+            firstNumber = 1;
             break;
         case '/':
             result = firstNumber / (+screen.innerHTML);
+            firstNumber = 1;
             if (result === 'Infinity') {
                 result = 'На ноль делить нельзя';
             }
             break;
         case '*':
             result = firstNumber * (+screen.innerHTML);
+            firstNumber = 1;
             break;
     }
     screen.innerHTML = result;
 })
-
-
-
 
 function remove(number) {
     return number.slice(0, -1) || 0;
