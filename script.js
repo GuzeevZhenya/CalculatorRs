@@ -15,7 +15,7 @@ let secondNumber;
 let isSecondNumber = false;
 let operation;
 let memoryOperation = 0;
-
+let result;
 
 //Вывод введенных чисел
 numberButton.forEach(function(item) {
@@ -66,32 +66,32 @@ dotButton.addEventListener('click', (e) => {
 //Очистка поля
 clearButton.addEventListener('click', () => {
     screen.innerHTML = '0';
+    result = 0;
 })
 
 equal.addEventListener('click', (e) => {
-    let result;
+    if (result) {
+        return;
+    }
     switch (operation) {
         case '+':
             result = firstNumber + +screen.innerHTML;
-            firstNumber = '';
             break;
         case '-':
             result = firstNumber - +screen.innerHTML;
-            firstNumber = 1;
             break;
         case '/':
             result = firstNumber / (+screen.innerHTML);
-            firstNumber = 1;
             if (result === 'Infinity') {
                 result = 'На ноль делить нельзя';
             }
             break;
         case '*':
             result = firstNumber * (+screen.innerHTML);
-            firstNumber = 1;
             break;
     }
     screen.innerHTML = result;
+
 })
 
 function remove(number) {
