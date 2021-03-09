@@ -1,4 +1,3 @@
-const button = document.querySelectorAll('button');
 const screen = document.querySelector('.screen');
 const removeButton = document.querySelector('.delete');
 const operationButton = document.querySelectorAll('.operation');
@@ -14,7 +13,6 @@ let firstNumber;
 let secondNumber;
 let isSecondNumber = false;
 let operation;
-let memoryOperation = 0;
 let result;
 const MAX_SCREEN_LENGTH = 16;
 
@@ -22,7 +20,6 @@ const MAX_SCREEN_LENGTH = 16;
 numberButton.forEach(function(item) {
         item.addEventListener('click', (e) => {
             let selectedNumber = e.target.value;
-
             if (screen.innerHTML.length < MAX_SCREEN_LENGTH) {
                 if (screen.innerHTML === '0') {
                     screen.innerHTML = selectedNumber;
@@ -32,14 +29,11 @@ numberButton.forEach(function(item) {
                         screen.innerHTML = selectedNumber;
                         secondNumber = selectedNumber;
                         isSecondNumber = false;
-
                     } else {
                         screen.append(selectedNumber);
                     }
                 }
             }
-            console.log(secondNumber);
-            console.log(firstNumber);
         })
     })
     //Конвертирует отрицательное в положительное, и положительное в отрицательное
@@ -48,7 +42,12 @@ convertor.addEventListener('click', () => {
 })
 
 removeButton.addEventListener('click', () => {
+    if (result) {
+        screen.innerHTML = "";
+    }
+
     screen.innerHTML = remove(screen.innerHTML);
+
 })
 
 operationButton.forEach(item => {
@@ -71,6 +70,7 @@ dotButton.addEventListener('click', (e) => {
 
 //Очистка поля
 clearButton.addEventListener('click', () => {
+
     screen.innerHTML = '0';
 })
 
@@ -93,6 +93,7 @@ equal.addEventListener('click', (e) => {
             result = firstNumber * +secondNumber;
             break;
     }
+    console.log(result);
     screen.innerHTML = result;
 })
 
